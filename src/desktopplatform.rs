@@ -40,7 +40,7 @@ impl Platform for DesktopPlatform {
     fn gameloop(&mut self, game: &mut Game) {
         while let Some(e) = self.events.next(&mut self.window) {
             // input handling
-            game.input.handle_event(&e);
+            //game.input.handle_event(&e);
     
             // game state update
             if let Some(_u) = e.update_args() {

@@ -1,15 +1,23 @@
 extern crate mercurylib;
 
 use mercurylib::game::Game;
-use mercurylib::desktopplatform::DesktopPlatform;
 use mercurylib::platform::Platform;
 
+#[cfg(target_family = "unix")]
+use mercurylib::desktopplatform::DesktopPlatform as CurrentPlatform;
+
+//#[cfg(target_family = "wasm")]
+//use mercurylib::wasmplatform::WasmPlatform as CurrentPlatform;
+
+#[cfg(target_family = "unix")]
 fn main() {
     let mut game = Game::new();
-    let mut pf = DesktopPlatform::new();
+    let mut pf = CurrentPlatform::new();
     pf.gameloop(&mut game);
 }
 
+#[cfg(target_family = "wasm")]
+fn main() {}
 
 // some notes:
 //

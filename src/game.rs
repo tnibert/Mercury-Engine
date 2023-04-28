@@ -1,6 +1,6 @@
 use crate::background::Background;
 use crate::player::Player;
-use crate::input::Input;
+//use crate::input::Input;
 use crate::gameobject::GameObject;
 use crate::collision::Rect;
 use std::time::Instant;
@@ -10,7 +10,7 @@ pub const SCREEN_HEIGHT: u32 = 480;
 pub const FRAME_RATE: u32 = 45;
 
 pub struct Game {
-    pub input: Input,
+    //pub input: Input,
     gameobjects: Vec<Box<dyn GameObject>>
 }
 
@@ -22,12 +22,12 @@ impl Game {
         let bg = Box::new(Background::new("map.jpg"));
 
         // setup subscriptions
-        let mut input = Input::new();
-        input.subscribe(player.observer.clone(), vec!["up", "down", "left", "right"]);
-        input.subscribe(bg.observer.clone(), vec!["up", "down", "left", "right"]);
+        //let mut input = Input::new();
+        //input.subscribe(player.observer.clone(), vec!["up", "down", "left", "right"]);
+        //input.subscribe(bg.observer.clone(), vec!["up", "down", "left", "right"]);
 
         Game {
-            input: input,
+            //input: input,
             gameobjects: vec![bg, player]
         }
     }
@@ -43,7 +43,12 @@ impl GameObject for Game {
             if let Some(img) = g.render() {
                 if let Some(pos) = g.position() {
                     let start = Instant::now();
+
+                    #[cfg(target_family = "unix")]
                     im::imageops::overlay(&mut screen_img, &img, pos.x as i64, pos.y as i64);
+                    #[cfg(target_family = "wasm")]
+                    im::imageops::overlay(&mut screen_img, &img, pos.x as u32, pos.y as u32);
+                    
                     let duration = start.elapsed();
                     println!("overlay: {:?}", duration);
                 } else {
