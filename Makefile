@@ -3,7 +3,7 @@ town_demo:
 town_demo_run:
 	cargo run --bin town_demo --release
 wasm_gfx_demo:
-	cargo build --target wasm32-unknown-unknown --release
+	cargo build --target wasm32-unknown-unknown --lib --release
 	mkdir -p www/
 	wasm-opt -o www/mercurylib.wasm -Oz target/wasm32-unknown-unknown/release/mercurylib.wasm
 	ls -lh www/mercurylib.wasm
