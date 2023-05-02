@@ -13,7 +13,7 @@ path = "src/lib.rs"
 
 [[bin]]
 name = "town_demo"
-path = "src/bin/town_demo.rs"
+path = "src/games/town_demo.rs"
 
 [dependencies]
 find_folder = "0.3.0"
