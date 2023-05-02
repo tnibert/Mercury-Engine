@@ -7,8 +7,8 @@ use graphics::*;
 use std::{thread, time::Duration};
 
 use crate::platform::Platform;
-use crate::game::{Game, SCREEN_WIDTH, SCREEN_HEIGHT, FRAME_RATE};
 use crate::gameobject::GameObject;
+use crate::{SCREEN_WIDTH, SCREEN_HEIGHT, FRAME_RATE};
 
 /*
  * Abstracts platform for a desktop PC
@@ -25,7 +25,7 @@ impl DesktopPlatform {
         let opengl = OpenGL::V3_2;
 
         Self {
-            window: WindowSettings::new("Prototype", [SCREEN_WIDTH, SCREEN_HEIGHT])
+            window: WindowSettings::new("Prototype", [SCREEN_WIDTH as u32, SCREEN_HEIGHT as u32])
                 .exit_on_esc(true)
                 .graphics_api(opengl)
                 .build()
@@ -37,7 +37,7 @@ impl DesktopPlatform {
 }
 
 impl Platform for DesktopPlatform {
-    fn gameloop(&mut self, game: &mut Game) {
+    fn gameloop(&mut self, game: &mut dyn GameObject) {
         while let Some(e) = self.events.next(&mut self.window) {
             // input handling
             //game.input.handle_event(&e);

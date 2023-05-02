@@ -6,7 +6,6 @@ pub mod gameobject;
 pub mod collision;
 pub mod background;
 pub mod platform;
-pub mod game;
 
 //#[cfg(target_family = "wasm")]
 //pub mod wasmplatform;
@@ -26,6 +25,11 @@ extern crate sdl2_window;
 
 extern crate image as im;
 
+// todo: what types should these be?
+pub const SCREEN_WIDTH: usize = 640;
+pub const SCREEN_HEIGHT: usize = 480;
+pub const FRAME_RATE: u32 = 45;
+
 /*
  * The following is what runs in wasm
  * todo: encapsulate into another "game"
@@ -33,11 +37,8 @@ extern crate image as im;
 
 use core::sync::atomic::{AtomicU32, Ordering};
 
-const WIDTH: usize = 640;
-const HEIGHT: usize = 480;
-
 #[no_mangle]
-static mut BUFFER: [u32; WIDTH * HEIGHT] = [0; WIDTH * HEIGHT];
+static mut BUFFER: [u32; SCREEN_WIDTH * SCREEN_HEIGHT] = [0; SCREEN_WIDTH * SCREEN_HEIGHT];
 
 static FRAME: AtomicU32 = AtomicU32::new(0);
 
@@ -51,12 +52,12 @@ pub unsafe extern fn go() {
 
 // We split this out so that we can escape 'unsafe' as quickly as possible.
 // todo: need to provide frame from engine game loop
-fn render_frame_safe(buffer: &mut [u32; WIDTH * HEIGHT]) {
+fn render_frame_safe(buffer: &mut [u32; SCREEN_WIDTH * SCREEN_HEIGHT]) {
     let f = FRAME.fetch_add(1, Ordering::Relaxed);
 
-    for y in 0..HEIGHT {
-        for x in 0..WIDTH {
-            buffer[y * WIDTH + x] = f.wrapping_add((x ^ y) as u32) | 0xFF_00_00_00;
+    for y in 0..SCREEN_HEIGHT {
+        for x in 0..SCREEN_WIDTH {
+            buffer[y * SCREEN_WIDTH + x] = f.wrapping_add((x ^ y) as u32) | 0xFF_00_00_00;
         }
     }
 }

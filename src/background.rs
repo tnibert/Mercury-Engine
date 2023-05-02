@@ -2,7 +2,7 @@ use crate::imgload::load_image_asset_buffer;
 use crate::observer::Listener;
 use crate::gameobject::GameObject;
 use crate::collision::Rect;
-use crate::game::{SCREEN_WIDTH, SCREEN_HEIGHT};
+use crate::{SCREEN_WIDTH, SCREEN_HEIGHT};
 
 use std::rc::Rc;
 use std::time::Instant;
