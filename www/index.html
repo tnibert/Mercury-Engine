@@ -26,8 +26,9 @@
 
         const ctx = canvas.getContext("2d");
 
+        setInterval(function(){ instance.exports.go() }, 10);
+
         const render = () => {
-          instance.exports.go();
           ctx.putImageData(image, 0, 0);
           requestAnimationFrame(render);
         };

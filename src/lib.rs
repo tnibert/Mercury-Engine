@@ -7,8 +7,10 @@ pub mod collision;
 pub mod background;
 pub mod platform;
 
-//#[cfg(target_family = "wasm")]
-//pub mod wasmplatform;
+#[cfg(target_family = "wasm")]
+extern crate wasm_bindgen;
+#[cfg(target_family = "wasm")]
+pub mod wasmplatform;
 #[cfg(target_family = "wasm")]
 pub mod games;
 #[cfg(target_family = "wasm")]
