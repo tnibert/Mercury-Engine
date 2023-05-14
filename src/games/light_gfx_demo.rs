@@ -15,18 +15,16 @@ use {
     mercurylib::desktopplatform::DesktopPlatform as CurrentPlatform
 };
 
-use core::sync::atomic::{AtomicU32, Ordering};
-
 pub struct GfxDemoGame {
     buffer: MercuryImageBuffer,
-    frame: AtomicU32
+    frame: u32
 }
 
 impl GfxDemoGame {
     pub fn new() -> Self {
         GfxDemoGame {
             buffer: MercuryImageBuffer::new(SCREEN_WIDTH, SCREEN_HEIGHT),
-            frame: AtomicU32::new(0)
+            frame: 0
         }
     }
 }
@@ -41,11 +39,11 @@ impl GameObject for GfxDemoGame {
     }
 
     fn update(&mut self) {
-        let f = self.frame.fetch_add(1, Ordering::Relaxed);
+        self.frame = self.frame + 1;
 
         for y in 0..SCREEN_HEIGHT {
             for x in 0..SCREEN_WIDTH {
-                let pixel = f.wrapping_add((x ^ y) as u32) | 0xFF_00_00_00;
+                let pixel = (self.frame + (x ^ y) as u32) | 0xFF_00_00_00;
                 let sep = u32_to_u8_array(pixel);
                 self.buffer.set_pixel(x as u32, y as u32, sep[3], sep[2], sep[1], sep[0]);
             }
