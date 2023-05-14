@@ -4,6 +4,7 @@ use crate::observer::Listener;
 use crate::gameobject::GameObject;
 use crate::collision::Rect;
 use crate::{SCREEN_WIDTH, SCREEN_HEIGHT};
+use crate::mercurygraphics::mercuryimagebuffer::MercuryImageBuffer;
 
 use std::rc::Rc;
 
@@ -30,7 +31,7 @@ impl Player {
 }
 
 impl GameObject for Player {
-    fn render(&self) -> Option<im::RgbaImage> {
+    fn render(&self) -> Option<MercuryImageBuffer> {
         return self.spr.render();
     }
 

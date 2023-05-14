@@ -50,7 +50,7 @@ impl Platform for DesktopPlatform {
             // rendering
             if let Some(args) = e.render_args() {
     
-                let frame = Texture::from_image(&game.render().unwrap(),
+                let frame = Texture::from_image(&game.render().unwrap().to_lib_rgba_image(),
                                            &TextureSettings::new());
     
                 self.gl.draw(args.viewport(), |c, g| {

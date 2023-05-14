@@ -13,6 +13,7 @@ use mercurylib::player::Player;
 //use crate::input::Input;
 use mercurylib::gameobject::GameObject;
 use mercurylib::collision::Rect;
+use mercurylib::mercurygraphics::mercuryimagebuffer::MercuryImageBuffer;
 use mercurylib::{SCREEN_WIDTH, SCREEN_HEIGHT};
 use std::time::Instant;
 
@@ -42,7 +43,7 @@ impl TownDemoGame {
 
 impl GameObject for TownDemoGame {
     // create the screen image
-    fn render(&self) -> Option<im::RgbaImage> {
+    fn render(&self) -> Option<MercuryImageBuffer> {
         let mut screen_img = im::RgbaImage::new(SCREEN_WIDTH as u32, SCREEN_HEIGHT as u32);
 
         for g in &self.gameobjects {
@@ -52,9 +53,9 @@ impl GameObject for TownDemoGame {
                     let start = Instant::now();
 
                     #[cfg(target_family = "unix")]
-                    im::imageops::overlay(&mut screen_img, &img, pos.x as i64, pos.y as i64);
+                    im::imageops::overlay(&mut screen_img, &img.to_lib_rgba_image(), pos.x as i64, pos.y as i64);
                     #[cfg(target_family = "wasm")]
-                    im::imageops::overlay(&mut screen_img, &img, pos.x as u32, pos.y as u32);
+                    im::imageops::overlay(&mut screen_img, &img.to_lib_rgba_image(), pos.x as u32, pos.y as u32);
                     
                     let duration = start.elapsed();
                     println!("overlay: {:?}", duration);
@@ -67,7 +68,7 @@ impl GameObject for TownDemoGame {
             
         }
 
-        return Some(screen_img);
+        return Some(MercuryImageBuffer::from_lib_rgba_image(&screen_img));
     }
 
     fn position(&self) -> Option<Rect> {

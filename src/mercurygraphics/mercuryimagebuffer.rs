@@ -7,6 +7,7 @@ use crate::{SCREEN_WIDTH, SCREEN_HEIGHT};
  * For the moment, the underlying representation is image::RgbaImage, but
  * this will change when we go nostd.
  */
+#[derive(Clone)]
 pub struct MercuryImageBuffer {
     buffer: im::RgbaImage
 }
@@ -19,14 +20,14 @@ impl MercuryImageBuffer {
     }
 
     /// load buffer from Image crate ImageBuffer
-    fn from_lib_rgba_image(img: &im::RgbaImage) -> Self {
+    pub fn from_lib_rgba_image(img: &im::RgbaImage) -> Self {
         Self {
             buffer: img.clone()
         }
     }
 
     /// return Image crate ImageBuffer representation
-    fn to_lib_rgba_image(&self) -> im::RgbaImage {
+    pub fn to_lib_rgba_image(&self) -> im::RgbaImage {
         self.buffer.clone()
     }
 

@@ -1,4 +1,5 @@
 use crate::mercurygraphics::imgload::load_image_asset_buffer;
+use crate::mercurygraphics::mercuryimagebuffer::MercuryImageBuffer;
 use crate::observer::Listener;
 use crate::gameobject::GameObject;
 use crate::collision::Rect;
@@ -33,7 +34,7 @@ impl GameObject for Background {
      * clip the background to fit current window based
      * on position
      */
-    fn render(&self) -> Option<im::RgbaImage> {
+    fn render(&self) -> Option<MercuryImageBuffer> {
         let start = Instant::now();
         let cropped = im::imageops::crop_imm(&self.full_image, self.crop_corner_x,
                       self.crop_corner_y,
@@ -41,7 +42,7 @@ impl GameObject for Background {
                       SCREEN_HEIGHT as u32).to_image();
         let duration = start.elapsed();
         println!("bg render: {:?}", duration);
-        return Some(cropped);
+        return Some(MercuryImageBuffer::from_lib_rgba_image(&cropped));
     }
 
     /*
