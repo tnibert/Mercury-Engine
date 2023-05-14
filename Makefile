@@ -2,6 +2,10 @@ town_demo:
 	cargo build --bin town_demo --release
 town_demo_run:
 	cargo run --bin town_demo --release
+desktop_gfx_demo:
+	cargo build --bin light_gfx_demo --release
+desktop_gfx_demo_run:
+	cargo run --bin light_gfx_demo --release
 wasm_gfx_demo:
 	cargo build --target wasm32-unknown-unknown --lib --release
 	mkdir -p www/

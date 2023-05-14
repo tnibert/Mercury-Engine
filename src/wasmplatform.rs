@@ -1,5 +1,6 @@
 use crate::{SCREEN_WIDTH, SCREEN_HEIGHT};
 use crate::light_gfx_demo::GfxDemoGame;
+use crate::gameobject::GameObject;
 // console.log_* calls are not actually sending anything to firefox console
 use web_sys::console;
 
@@ -22,5 +23,5 @@ pub unsafe extern fn go() {
 fn render_frame_safe(buffer: &mut [u32; SCREEN_WIDTH * SCREEN_HEIGHT], wasm_game: &mut GfxDemoGame) {
     console::log_1(&"Hello, world2!".into());
     wasm_game.update();
-    *buffer = wasm_game.render();
+    *buffer = wasm_game.render().unwrap().to_wasm_compatible_buffer();
 }

@@ -15,6 +15,10 @@ path = "src/lib.rs"
 name = "town_demo"
 path = "src/games/town_demo.rs"
 
+[[bin]]
+name = "light_gfx_demo"
+path = "src/games/light_gfx_demo.rs"
+
 [dependencies]
 find_folder = "0.3.0"
 
