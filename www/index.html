@@ -7,6 +7,7 @@
           fetch("./mercurylib.wasm")
         );
 
+        // todo: get these values from exports
         const width = 640;
         const height = 480;
 
@@ -26,7 +27,10 @@
 
         const ctx = canvas.getContext("2d");
 
-        setInterval(function(){ instance.exports.go() }, 10);
+        // I have no idea why the fuck this is working
+        // we don't seem to be instantiating hella GfxDemoGame instances?
+        // todo: correct frame rate
+        setInterval(function(){ instance.exports.go() }, 1);
 
         const render = () => {
           ctx.putImageData(image, 0, 0);

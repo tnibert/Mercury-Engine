@@ -1,4 +1,4 @@
-use crate::imgload::load_image_asset_buffer;
+use crate::mercurygraphics::imgload::load_image_asset_buffer;
 use crate::observer::Listener;
 use crate::gameobject::GameObject;
 use crate::collision::Rect;

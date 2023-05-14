@@ -1,4 +1,4 @@
-use crate::imgload::*;
+use crate::mercurygraphics::imgload::*;
 use crate::gameobject::GameObject;
 use crate::collision::Rect;
 use std::collections::HashMap;

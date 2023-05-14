@@ -1,6 +1,6 @@
 pub mod observer;
 pub mod sprite;
-pub mod imgload;
+pub mod mercurygraphics;
 pub mod player;
 pub mod gameobject;
 pub mod collision;
@@ -8,7 +8,7 @@ pub mod background;
 pub mod platform;
 
 #[cfg(target_family = "wasm")]
-extern crate wasm_bindgen;
+extern crate web_sys;
 #[cfg(target_family = "wasm")]
 pub mod wasmplatform;
 #[cfg(target_family = "wasm")]
