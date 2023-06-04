@@ -5,14 +5,13 @@ use sdl2_window::Sdl2Window;
 use opengl_graphics::*;
 use graphics::*;
 use std::{thread, time::Duration};
-
-use crate::platform::Platform;
 use crate::gameobject::GameObject;
 use crate::{SCREEN_WIDTH, SCREEN_HEIGHT, FRAME_RATE};
 
 /*
  * Abstracts platform for a desktop PC
  * e.g. Linux, Windows, Mac OS - any platform supporting Piston/OpenGL/SDL
+ * todo: readd Windows support
  */
 pub struct DesktopPlatform {
     window: Sdl2Window,
@@ -34,10 +33,8 @@ impl DesktopPlatform {
             events: Events::new(EventSettings::new()),
         }
     }
-}
 
-impl Platform for DesktopPlatform {
-    fn gameloop(&mut self, game: &mut dyn GameObject) {
+    pub fn gameloop(&mut self, game: &mut dyn GameObject) {
         while let Some(e) = self.events.next(&mut self.window) {
             // input handling
             //game.input.handle_event(&e);

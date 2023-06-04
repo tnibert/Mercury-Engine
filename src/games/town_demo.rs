@@ -1,19 +1,13 @@
 extern crate mercurylib;
 extern crate image as im;
 
-#[cfg(target_family = "unix")]
-use mercurylib::desktopplatform::DesktopPlatform as CurrentPlatform;
-
-//#[cfg(target_family = "wasm")]
-//use mercurylib::wasmplatform::WasmPlatform as CurrentPlatform;
-
-use mercurylib::platform::Platform;
 use mercurylib::background::Background;
 use mercurylib::player::Player;
 //use crate::input::Input;
 use mercurylib::gameobject::GameObject;
 use mercurylib::collision::Rect;
 use mercurylib::mercurygraphics::mercuryimagebuffer::MercuryImageBuffer;
+use mercurylib::platform::desktopplatform::DesktopPlatform;
 use mercurylib::{SCREEN_WIDTH, SCREEN_HEIGHT};
 use std::time::Instant;
 
@@ -86,7 +80,7 @@ impl GameObject for TownDemoGame {
 #[cfg(target_family = "unix")]
 fn main() {
     let mut game = TownDemoGame::new();
-    let mut pf = CurrentPlatform::new();
+    let mut pf = DesktopPlatform::new();
     pf.gameloop(&mut game);
 }
 
