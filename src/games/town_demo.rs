@@ -7,7 +7,7 @@ use mercurylib::player::Player;
 use mercurylib::gameobject::GameObject;
 use mercurylib::collision::Rect;
 use mercurylib::mercurygraphics::mercuryimagebuffer::MercuryImageBuffer;
-use mercurylib::platform::desktopplatform::DesktopPlatform;
+use mercurylib::platform::desktopplatform::run_desktop_platform;
 use mercurylib::{SCREEN_WIDTH, SCREEN_HEIGHT};
 use std::time::Instant;
 
@@ -79,9 +79,7 @@ impl GameObject for TownDemoGame {
 
 #[cfg(target_family = "unix")]
 fn main() {
-    let mut game = TownDemoGame::new();
-    let mut pf = DesktopPlatform::new();
-    pf.gameloop(&mut game);
+    run_desktop_platform(&mut TownDemoGame::new());
 }
 
 #[cfg(target_family = "wasm")]

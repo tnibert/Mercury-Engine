@@ -12,7 +12,7 @@ use {
     mercurylib::{SCREEN_WIDTH, SCREEN_HEIGHT},
     mercurylib::mercurygraphics::mercuryimagebuffer::MercuryImageBuffer,
     mercurylib::gameobject::GameObject,
-    mercurylib::platform::desktopplatform::DesktopPlatform
+    mercurylib::platform::desktopplatform::run_desktop_platform
 };
 
 pub struct GfxDemoGame {
@@ -61,7 +61,5 @@ fn u32_to_u8_array(n: u32) -> [u8; 4] {
 
 #[cfg(target_family = "unix")]
 fn main() {
-    let mut game = GfxDemoGame::new();
-    let mut pf = DesktopPlatform::new();
-    pf.gameloop(&mut game);
+    run_desktop_platform(&mut GfxDemoGame::new());
 }

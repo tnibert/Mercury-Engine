@@ -11,16 +11,16 @@ use crate::{SCREEN_WIDTH, SCREEN_HEIGHT, FRAME_RATE};
 /*
  * Abstracts platform for a desktop PC
  * e.g. Linux, Windows, Mac OS - any platform supporting Piston/OpenGL/SDL
- * todo: readd Windows support
+ * todo: re add Windows support
  */
-pub struct DesktopPlatform {
+struct DesktopPlatform {
     window: Sdl2Window,
     gl: GlGraphics,
     events: Events
 }
 
 impl DesktopPlatform {
-    pub fn new() -> DesktopPlatform {
+    fn new() -> DesktopPlatform {
         let opengl = OpenGL::V3_2;
 
         Self {
@@ -34,7 +34,7 @@ impl DesktopPlatform {
         }
     }
 
-    pub fn gameloop(&mut self, game: &mut dyn GameObject) {
+    fn gameloop(&mut self, game: &mut dyn GameObject) {
         while let Some(e) = self.events.next(&mut self.window) {
             // input handling
             //game.input.handle_event(&e);
@@ -64,4 +64,11 @@ impl DesktopPlatform {
             thread::sleep(Duration::new(0, 1_000_000_000u32 / FRAME_RATE));
         }
     }
+}
+
+
+/// Entry point from the game to the desktop platform
+pub fn run_desktop_platform(game: &mut dyn GameObject) {
+    let mut pf = DesktopPlatform::new();
+    pf.gameloop(game);
 }
