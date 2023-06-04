@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <script type="module">
+      async function init() {
+        const { instance } = await WebAssembly.instantiateStreaming(
+          fetch("./mercurylib.wasm")
+        );
+
+        // todo: get these values from exports
+        const width = 640;
+        const height = 480;
+
+        const canvas = document.getElementById("demo-canvas");
+        canvas.width = width;
+        canvas.height = height;
+
+        const buffer_address = instance.exports.BUFFER.value;
+        const image = new ImageData(
+            new Uint8ClampedArray(
+                instance.exports.memory.buffer,
+                buffer_address,
+                4 * width * height,
+            ),
+            width,
+        );
+
+        const ctx = canvas.getContext("2d");
+
+        // I have no idea why the fuck this is working
+        // we don't seem to be instantiating hella GfxDemoGame instances?
+        // todo: correct frame rate
+        setInterval(function(){ instance.exports.go() }, 1);
+
+        const render = () => {
+          ctx.putImageData(image, 0, 0);
+          requestAnimationFrame(render);
+        };
+
+        render();
+      }
+
+      init();
+    </script>
+  </head>
+  <body>
+    <canvas id="demo-canvas"></canvas>
+  </body>
+</html>

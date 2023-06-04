@@ -1,4 +1,5 @@
-use crate::imgload::*;
+use crate::mercurygraphics::imgload::*;
+use crate::mercurygraphics::mercuryimagebuffer::MercuryImageBuffer;
 use crate::gameobject::GameObject;
 use crate::collision::Rect;
 use std::collections::HashMap;
@@ -19,8 +20,8 @@ pub enum Direction {
     Down
 }
 
-fn load_spritesheet(img: &im::RgbaImage, rows: usize, columns: usize) -> HashMap<Direction, Vec<im::RgbaImage>> {
-    let mut sheet: HashMap<Direction, Vec<im::RgbaImage>> = HashMap::new();
+fn load_spritesheet(img: &im::RgbaImage, rows: usize, columns: usize) -> HashMap<Direction, Vec<MercuryImageBuffer>> {
+    let mut sheet: HashMap<Direction, Vec<MercuryImageBuffer>> = HashMap::new();
     let order = [Direction::Down, Direction::Left, Direction::Right, Direction::Up];
     let mut index = 0;
     for y in 0..rows {
@@ -32,9 +33,9 @@ fn load_spritesheet(img: &im::RgbaImage, rows: usize, columns: usize) -> HashMap
                 SPRITE_FRAME_W as u32,
                 SPRITE_FRAME_H as u32).to_image();
             match sheet.get_mut(&order[index]) {
-                Some(vec) => vec.push(cropped),
+                Some(vec) => vec.push(MercuryImageBuffer::from_lib_rgba_image(&cropped)),
                 None => {
-                    sheet.insert(order[index], vec![cropped]);
+                    sheet.insert(order[index], vec![MercuryImageBuffer::from_lib_rgba_image(&cropped)]);
                 }
             };
         }
@@ -47,7 +48,7 @@ fn load_spritesheet(img: &im::RgbaImage, rows: usize, columns: usize) -> HashMap
 pub struct Sprite {
     position: Rect,
     frame: usize,
-    frames: HashMap<Direction, Vec<im::RgbaImage>>,
+    frames: HashMap<Direction, Vec<MercuryImageBuffer>>,
     direction: Direction,
     speed: f64,
     frame_change_count: u32
@@ -85,7 +86,7 @@ impl Sprite {
         self.set_facing(d);
     }
 
-    pub fn current_frame(&self) -> &im::RgbaImage {
+    pub fn current_frame(&self) -> &MercuryImageBuffer {
         return &self.frames.get(&self.direction).unwrap()[self.frame];
     }
 
@@ -96,7 +97,7 @@ impl Sprite {
 }
 
 impl GameObject for Sprite {
-    fn render(&self) -> Option<im::RgbaImage> {
+    fn render(&self) -> Option<MercuryImageBuffer> {
         return Some(self.current_frame().clone());
     }
 
