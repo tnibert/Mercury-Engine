@@ -12,10 +12,6 @@ path = "src/lib.rs"
 #crate-type = ["cdylib"]
 
 [[bin]]
-name = "town_demo"
-path = "src/games/town_demo.rs"
-
-[[bin]]
 name = "light_gfx_demo"
 path = "src/games/light_gfx_demo.rs"
 
