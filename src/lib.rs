@@ -1,10 +1,6 @@
-pub mod observer;
-pub mod sprite;
 pub mod mercurygraphics;
-pub mod player;
 pub mod gameobject;
 pub mod collision;
-pub mod background;
 pub mod platform;
 
 #[cfg(target_family = "wasm")]
@@ -14,8 +10,6 @@ pub mod games;
 #[cfg(target_family = "wasm")]
 use games::light_gfx_demo;
 
-#[cfg(target_family = "unix")]
-pub mod input;
 #[cfg(target_family = "unix")]
 extern crate piston;
 #[cfg(target_family = "unix")]
