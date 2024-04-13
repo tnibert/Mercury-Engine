@@ -1,10 +1,11 @@
 use crate::collision::Rect;
+use crate::mercurygraphics::mercuryimagebuffer::MercuryImageBuffer;
 
 pub trait GameObject {
     // this will be inefficient giving ownership of the image each time
     // and therefore rerendering excessively
     // but we'll see how it goes and then refactor a bit
-    fn render(&self) -> Option<im::RgbaImage>;
+    fn render(&self) -> Option<MercuryImageBuffer>;
 
     fn position(&self) -> Option<Rect>;
 
